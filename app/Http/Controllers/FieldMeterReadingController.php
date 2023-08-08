@@ -192,22 +192,24 @@ class FieldMeterReadingController extends Controller
             'reading_consumption' => $this->waterbill->computed_total['meter_consumption'],
             'billing_amount' => $this->waterbill->computed_total['amount_consumption'],
             'billing_surcharge' => '0.00',
-            'billing_meter_ips' => $this->waterbill->balance->billing_meter_ips,
+            'billing_meter_ips' => $this->waterbill->balance?->billing_meter_ips ?? 0,
             'billing_total' => $this->waterbill->computed_total['total'],
             'balance' => $this->waterbill->computed_total['total'],
             'posted_by' => $request->id,
             'user_id' => $request->id,
         ];
 
-        $update_transaction = Transaction::findOrFail($this->waterbill->balance->id);
-        // i need to remove the toAccounting because it throws a 500 error
-        // please accept this changes
-        $update_transaction->billing_surcharge = $this->waterbill->computed_total['surcharge'];
-        $update_transaction->billing_total += $this->waterbill->computed_total['surcharge'];
-        $update_transaction->balance += $this->waterbill->computed_total['surcharge'];
-        $update_transaction->update();
-
-
+        if (isset($this->waterbill->balance?->id))
+        {
+            $update_transaction = Transaction::findOrFail($this->waterbill->balance->id);
+            // i need to remove the toAccounting because it throws a 500 error
+            // please accept this changes
+            $update_transaction->billing_surcharge = $this->waterbill->computed_total['surcharge'];
+            $update_transaction->billing_total += $this->waterbill->computed_total['surcharge'];
+            $update_transaction->balance += $this->waterbill->computed_total['surcharge'];
+            $update_transaction->update();
+        }
+        
         $transactions = Transaction::create($fillable);
         return response()->json(['created' => true, 'data'=>$fillable, 'id' => $request->customer_id]);
     }
