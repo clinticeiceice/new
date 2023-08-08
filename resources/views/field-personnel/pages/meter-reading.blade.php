@@ -5,7 +5,7 @@
 @section('content')
 
     <?php
-        // dd(isset($customer));
+        //dd(isset($customer));
         $amount = 0.00;
         $count = 0;
         function toAccounting($num){ return number_format($num, 2, '.', ','); }
@@ -104,8 +104,8 @@
         </div>
         <div class="row">
             <div class="col-xs-12 d-flex justify-content-md-start justify-content-center align-items-center mt-2">
-                <!-- <button class="btn btn-success d-flex justify-content-between align-items-center ms-1" id="print-bill" data-enable="0"><i data-feather="printer" class="feather-18 me-2"></i> Print Bill</button> -->
-                <!-- <button class="btn btn-secondary d-flex justify-content-between align-items-center ms-1" id="reload" data-enable="0"><i data-feather="rotate-cw" class="feather-18 me-2"></i> Reload Page</button> -->
+                 <!--<button class="btn btn-success d-flex justify-content-between align-items-center ms-1" id="print-bill" data-enable="0"><i data-feather="printer" class="feather-18 me-2"></i> Print Bill</button> -->
+               <!-- <button class="btn btn-secondary d-flex justify-content-between align-items-center ms-1" id="reload" data-enable="0"><i data-feather="rotate-cw" class="feather-18 me-2"></i> Reload Page</button> -->
             </div>
         </div>
         @endif
